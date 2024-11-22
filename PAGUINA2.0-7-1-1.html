@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Botones de Registro y Login -->
+<section>
+    <button onclick="showForm('login')">Iniciar sesión</button>
+    <button onclick="showForm('register')">Registrarse</button>
+</section>
+
+<!-- Formulario de Registro/Login (oculto por defecto) -->
+<div id="form-container">
+    <h2 id="form-title">Formulario de Registro</h2>
+    <form id="login-form" style="display:none;" onsubmit="return handleLogin(event)">
+        <input type="text" id="login-username" placeholder="Usuario" required>
+        <input type="password" id="login-password" placeholder="Contraseña" required>
+        <button type="submit">Iniciar sesión</button>
+    </form>
+
+    <form id="register-form" style="display:none;" onsubmit="return handleRegister(event)">
+        <input type="text" id="register-username" placeholder="Usuario" required>
+        <input type="password" id="register-password" placeholder="Contraseña" required>
+        <button type="submit">Registrarse</button>
+    </form>
+
+    <button id="close-btn" onclick="closeForm()">Cerrar</button>
+</div>
+
+<script>
+    // Mostrar el formulario de registro o inicio de sesión
+    function showForm(formType) {
+        document.getElementById('form-container').style.display = 'block';
+        if (formType === 'login') {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('form-title').textContent = 'Iniciar sesión';
+        } else {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('form-title').textContent = 'Formulario de Registro';
+        }
+    }
+
+    // Cerrar el formulario
+    function closeForm() {
+        document.getElementById('form-container').style.display = 'none';
+    }
+
+    // Manejar el registro
+    function handleRegister(event) {
+        event.preventDefault();
+
+        var username = document.getElementById('register-username').value;
+        var password = document.getElementById('register-password').value;
+
+        // Guardar los datos del usuario en sessionStorage
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('password', password);
+
+        alert('¡Registro exitoso! Puedes iniciar sesión ahora.');
+
+        closeForm();
+    }
+
+    // Manejar el inicio de sesión
+    function handleLogin(event) {
+        event.preventDefault();
+
+        var username = document.getElementById('login-username').value;
+        var password = document.getElementById('login-password').value;
+
+        // Verificar si los datos coinciden con lo almacenado en sessionStorage
+        if (sessionStorage.getItem('username') === username && sessionStorage.getItem('password') === password) {
+            alert('¡Inicio de sesión exitoso!');
+            closeForm();
+        } else {
+            alert('Usuario o contraseña incorrectos.');
+        }
+    }
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a FREENDER</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* Fondo negro */
+            color: #FFFFFF; /* Texto blanco */
+        }
+
+        header {
+            background-color: #9B59B6; /* Morado pastel */
+            color: #FFFFFF; /* Texto blanco */
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        nav {
+            background-color: #8E44AD; /* Morado pastel */
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #FFFFFF; /* Texto blanco */
+            padding: 10px 20px;
+            text-decoration: none;
+            margin: 0 15px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #9B59B6; /* Morado pastel */
+            color: #000000; /* Texto negro */
+        }
+
+        section {
+            padding: 40px;
+            text-align: center;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #9B59B6; /* Morado pastel */
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            margin: 10px;
+            background-color: #9B59B6; /* Morado pastel */
+            color: #FFFFFF; /* Texto blanco */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #8E44AD; /* Morado más oscuro */
+            color: #000000; /* Texto negro */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333333; /* Fondo gris oscuro */
+            color: #FFFFFF; /* Texto blanco */
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: #9B59B6; /* Morado pastel */
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            color: #FFFFFF; /* Texto blanco al pasar el cursor */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 1.2em;
+        }
+
+        ul li {
+            background-color: #222222; /* Fondo gris muy oscuro */
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 20px;
+        }
+
+        ul li img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        ul li .info {
+            flex-grow: 1;
+            color: #FFFFFF; /* Color de texto blanco para la información */
+        }
+
+        .detalles {
+            display: none;
+            margin-top: 10px;
+            background-color: #444444;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        #faq, #testimonios, #suscripcion, #contacto {
+            background-color: #333333;
+        }
+
+        #faq dl {
+            text-align: left;
+            margin: 0 auto;
+            display: inline-block;
+        }
+
+        #faq dt {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #faq dd {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        form input, form textarea {
+            padding: 10px;
+            margin-top: 10px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        iframe {
+            border: 0;
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Agregar el widget de Google Translate -->
+    <div id="google_translate_element" style="position: absolute; top: 20px; right: 20px;"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'es',
+                includedLanguages: 'en,fr,de,it,pt,ru', // Agrega los idiomas que deseas soportar
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Barra de Navegación -->
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#desarrolladores">Desarrolladores Web</a>
+        <a href="#disenadores">Diseñadores Gráficos</a>
+        <a href="#empresas">Proyectos de Empresas</a>
+        <a href="#freelancers">Perfiles de Freelancers</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+
+    <!-- Encabezado -->
+    <header>
+        <h1>Bienvenido a FREENDER</h1>
+        <p>El Match Perfecto Para Tu Proyecto.</p>
+    </header>
+
+    <!-- Descripción General -->
+    <section id="inicio">
+        <h2>¿Qué es FREENDER?</h2>
+        <p style="color: white;">
+            FREENDER es una plataforma de cooperación de trabajo en equipo que facilita la creación de proyectos colaborativos. Nuestro objetivo es mejorar la calidad y el tiempo de entrega al hacer coincidir a los profesionales más adecuados para cada tarea, creando el equipo perfecto para tu proyecto.
+        </p>
+    </section>
+
+    <!-- Sección Desarrolladores Web -->
+    <section id="desarrolladores">
+        <h2>Desarrolladores Web Disponibles</h2>
+        <p>Aquí puedes ver los freelancers especializados en desarrollo web.</p>
+        <ul>
+            <li>
+                <img src="imagenes/juan-perez.jpg" alt="Juan Pérez">
+                <div class="info">
+                    <strong>Juan Pérez</strong> - Desarrollador Frontend
+                    <button onclick="toggleDetalles('detallesJuan')">Ver proyectos</button>
+                    <div id="detallesJuan" class="detalles">
+                        <p>Proyecto: <i>Aplicación Web para Tienda Online</i></p>
+                        <p>Descripción: Desarrollo completo de una plataforma de comercio electrónico con integración de pasarelas de pago y gestión de productos.</p>
+                    </div>
+                </div>
+            </li>
+            <!-- Más freelancers pueden añadirse aquí -->
+        </ul>
+    </section>
+<section id="buscar-proyectos">
+    <h2>¿Buscas Proyectos? Encuentra Freelancers en Otros Sitios</h2>
+    <p>Explora sitios externos donde puedes encontrar proyectos interesantes.</p>
+    <ul>
+        <li><a href="https://www.upwork.com/search/jobs/?q=freelance" target="_blank">Buscar en Upwork</a></li>
+        <li><a href="https://www.freelancer.com/jobs" target="_blank">Buscar en Freelancer</a></li>
+        <li><a href="https://www.fiverr.com/search/gigs?query=freelancer" target="_blank">Buscar en Fiverr</a></li>
+        <li><a href="https://www.guru.com/d/jobs/q-freelancer" target="_blank">Buscar en Guru</a></li>
+    </ul>
+</section>
+
+    <!-- Sección Proyectos de Empresas -->
+    <section id="empresas">
+        <h2>Proyectos de Empresas</h2>
+        <p>Aquí puedes ver los proyectos disponibles publicados por empresas.</p>
+        <!-- Proyectos de empresas se agregan aquí -->
+        <ul>
+            <li>
+                <strong>Desarrollo de una app móvil</strong>
+                <p>Se busca un equipo para desarrollar una aplicación móvil para gestión de pedidos en restaurantes.</p>
+            </li>
+            <!-- Más proyectos pueden añadirse aquí -->
+        </ul>
+    </section>
+
+    <!-- Sección de Freelancers -->
+    <section id="freelancers">
+        <h2>Perfiles de Freelancers</h2>
+        <p>Aquí puedes explorar los perfiles de freelancers disponibles para tu proyecto.</p>
+        <!-- Perfiles de freelancers -->
+        <ul>
+            <li>
+                <strong>Pedro García</strong> - Diseño Gráfico
+                <p>Especialista en branding, identidad visual y diseño UX/UI.</p>
+            </li>
+            <!-- Más perfiles pueden añadirse aquí -->
+        </ul>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section id="faq">
+        <h2>Preguntas Frecuentes</h2>
+        <dl>
+            <dt>¿Cómo me registro?</dt>
+            <dd>Puedes registrarte como freelancer o empresa mediante nuestro formulario en la página de registro.</dd>
+
+            <dt>¿Cómo me contacto con un freelancer?</dt>
+            <dd>Puedes enviar un mensaje directamente desde su perfil o contactarlos por correo electrónico.</dd>
+
+            <dt>¿Hay alguna tarifa para usar FREENDER?</dt>
+            <dd>FREENDER es completamente gratuito para registrarse y navegar por los perfiles.</dd>
+        </dl>
+    </section>
+
+    <!-- Testimonios -->
+    <section id="testimonios">
+        <h2>Testimonios</h2>
+        <p><strong>Juan Pérez:</strong> "Gracias a FREENDER, pude formar un equipo increíble para mi proyecto de ecommerce, mejorando nuestra eficiencia y calidad." </p>
+        <p><strong>Ana Martínez:</strong> "La plataforma me ayudó a encontrar el equipo perfecto para desarrollar una API compleja. Muy recomendable." </p>
+    </section>
+
+    <!-- Suscripción al Boletín -->
+    <section id="suscripcion">
+        <h2>Suscríbete al boletín</h2>
+        <form action="#" method="post">
+            <label for="emailBoletin">Correo Electrónico:</label>
+            <input type="email" id="emailBoletin" name="emailBoletin" required>
+            <button type="submit">Suscribirse</button>
+        </form>
+    </section>
+<!-- Chatbot -->
+<div id="chatbot-container">
+    <div id="chatbot-header">Asistente Virtual</div>
+    <div id="chatbot-messages"></div>
+    <input type="text" id="chatbot-input" placeholder="Escribe tu mensaje...">
+    <button id="chatbot-send-btn" onclick="sendMessage()">Enviar</button>
+</div>
+
+<button id="chatbot-toggle-btn" onclick="toggleChatbot()">💬</button>
+
+<script>
+    // Función para mostrar u ocultar el chatbot
+    function toggleChatbot() {
+        var chatbot = document.getElementById('chatbot-container');
+        if (chatbot.style.display === "none" || chatbot.style.display === "") {
+            chatbot.style.display = "block";
+        } else {
+            chatbot.style.display = "none";
+        }
+    }
+
+    // Función para enviar el mensaje del usuario
+    function sendMessage() {
+        var userMessage = document.getElementById('chatbot-input').value;
+        if (userMessage.trim() === "") {
+            return;
+        }
+
+        var messagesContainer = document.getElementById('chatbot-messages');
+
+        // Mostrar el mensaje del usuario en el chat
+        var userMessageDiv = document.createElement('div');
+        userMessageDiv.style.color = "#FFF";
+        userMessageDiv.style.marginBottom = "10px";
+        userMessageDiv.innerHTML = "<strong>Tu:</strong> " + userMessage;
+        messagesContainer.appendChild(userMessageDiv);
+
+        // Limpiar el campo de entrada
+        document.getElementById('chatbot-input').value = "";
+
+        // Respuesta automática del bot
+        var botResponse = getBotResponse(userMessage);
+        var botMessageDiv = document.createElement('div');
+        botMessageDiv.style.color = "#DDD";
+        botMessageDiv.style.marginBottom = "10px";
+        botMessageDiv.innerHTML = "<strong>Asistente:</strong> " + botResponse;
+        messagesContainer.appendChild(botMessageDiv);
+
+        // Hacer scroll hacia el final del chat
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Función que devuelve una respuesta del bot según la pregunta
+    function getBotResponse(userMessage) {
+        var response = "";
+
+        // Convertir el mensaje a minúsculas para hacer las comparaciones insensibles a mayúsculas
+        var message = userMessage.toLowerCase();
+
+        // Respuestas a saludos comunes en varios idiomas
+        if (message.includes("hola") || message.includes("hey") || message.includes("buenos días") || message.includes("hello") || message.includes("hi")) {
+            response = "¡Hola! ¿Cómo puedo ayudarte hoy?";
+        } else if (message.includes("cómo estás") || message.includes("how are you") || message.includes("comment ça va") || message.includes("wie geht's")) {
+            response = "¡Estoy bien, gracias! ¿Y tú?";
+        } else if (message.includes("adiós") || message.includes("bye") || message.includes("au revoir") || message.includes("tschüss")) {
+            response = "¡Hasta luego! Si necesitas más ayuda, estaré aquí.";
+        } else if (message.includes("gracias") || message.includes("thank you") || message.includes("merci") || message.includes("danke")) {
+            response = "¡De nada! Estoy aquí para ayudarte.";
+        } else if (message.includes("¿qué tal?") || message.includes("what's up")) {
+            response = "Todo bien, gracias por preguntar. ¿Cómo puedo asistirte?";
+        } else if (message.includes("¿cómo te llamas?") || message.includes("what's your name") || message.includes("comment tu t'appelles") || message.includes("wie heißt du")) {
+            response = "Soy el Asistente Virtual de FREENDER, ¿en qué te puedo ayudar?";
+        } else {
+            response = getBotResponseByKeywords(message);
+        }
+
+        return response;
+    }
+
+    // Función para manejar respuestas basadas en palabras clave (por ejemplo, preguntas sobre los servicios)
+    function getBotResponseByKeywords(message) {
+        var response = "";
+
+        if (message.includes("precio")) {
+            response = "FREENDER es completamente gratuito para los freelancers. Solo las empresas tienen costos asociados a la publicación de proyectos.";
+        } else if (message.includes("registro")) {
+            response = "Puedes registrarte como freelancer o empresa mediante nuestro formulario en la página de registro.";
+        } else if (message.includes("freelancer")) {
+            response = "FREENDER te conecta con freelancers de diferentes disciplinas como desarrollo web, diseño gráfico, redacción, y más.";
+        } else if (message.includes("trabajo remoto")) {
+            response = "¡Claro! En FREENDER puedes encontrar proyectos de trabajo remoto para freelancers de todo el mundo.";
+        } else {
+            response = "Lo siento, no entiendo esa pregunta. ¿Podrías reformularla o preguntarme sobre los servicios que ofrecemos?";
+        }
+
+        return response;
+    }
+</script>
+
+<script>
+    // Ocultar el chatbot por defecto
+    document.getElementById('chatbot-container').style.display = 'none';
+</script>
+
+    <!-- Mapa de Ubicación -->
+    <section id="ubicacion">
+        <h2>Ubicación</h2>
+        <iframe src="https://www.google.com/maps/embed?pb=..." loading="lazy"></iframe>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto">
+        <h2>Contáctanos</h2>
+        <form action="#" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="mensaje">Mensaje:</label><br>
+            <textarea id="mensaje" name="mensaje" rows="4" cols="50" required></textarea><br><br>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer>
+        <p>&copy; 2024 Freelancer Plataforma. Todos los derechos reservados.</p>
+        <div>
+            <a href="#">Política de Privacidad</a> |
+            <a href="#">Términos y Condiciones</a>
+        </div>
+    </footer>
+
+    <script>
+        // Función para mostrar u ocultar detalles
+        function toggleDetalles(detallesId) {
+            var detalles = document.getElementById(detallesId);
+            if (detalles.style.display === "none" || detalles.style.display === "") {
+                detalles.style.display = "block";
+            } else {
+                detalles.style.display = "none";
+            }
+        }
+    </script>
+<!-- Tienda de Créditos -->
+<section id="credit-store" style="background-color: #2c2c2c; padding: 20px; border-radius: 10px; text-align: center; margin-top: 40px;">
+    <h2 style="color: #9B59B6;">Tienda de Créditos</h2>
+    <p style="color: white;">Compra créditos para usar en tu cuenta. Elige el paquete que desees.</p>
+    
+    <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+        <!-- Paquete 1 -->
+        <div class="credit-package" style="background-color: #3b3b3b; border-radius: 10px; padding: 20px; width: 200px;">
+            <h3 style="color: #9B59B6;">Paquete 1</h3>
+            <p style="color: white;">100 Créditos</p>
+            <p style="color: white; font-size: 1.5em;">$10.00</p>
+            <button style="background-color: #9B59B6; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;" onclick="buyCredits(100, 10)">Comprar</button>
+        </div>
+        
+        <!-- Paquete 2 -->
+        <div class="credit-package" style="background-color: #3b3b3b; border-radius: 10px; padding: 20px; width: 200px;">
+            <h3 style="color: #9B59B6;">Paquete 2</h3>
+            <p style="color: white;">250 Créditos</p>
+            <p style="color: white; font-size: 1.5em;">$20.00</p>
+            <button style="background-color: #9B59B6; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;" onclick="buyCredits(250, 20)">Comprar</button>
+        </div>
+
+        <!-- Paquete 3 -->
+        <div class="credit-package" style="background-color: #3b3b3b; border-radius: 10px; padding: 20px; width: 200px;">
+            <h3 style="color: #9B59B6;">Paquete 3</h3>
+            <p style="color: white;">500 Créditos</p>
+            <p style="color: white; font-size: 1.5em;">$40.00</p>
+            <button style="background-color: #9B59B6; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;" onclick="buyCredits(500, 40)">Comprar</button>
+        </div>
+    </div>
+    <form action="https://www.paypal.com/donate" method="post" target="_top">
+        <input type="hidden" name="hosted_button_id" value="3YP5K9FGZ67GJ" />
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+        <img alt="" border="0" src="https://www.paypal.com/en_CO/i/scr/pixel.gif" width="1" height="1" />
+        </form>
+        
+    <!-- Mostrar los créditos disponibles -->
+    <div id="credits-display" style="margin-top: 30px; color: white;">
+        <h3>Tus Créditos Disponibles:</h3>
+        <p id="user-credits">0 Créditos</p>
+    </div>
+</section>
+
+<script>
+    // Función para manejar la compra de créditos
+    function buyCredits(credits, price) {
+        let currentCredits = parseInt(localStorage.getItem('userCredits')) || 0;
+        currentCredits += credits;
+        localStorage.setItem('userCredits', currentCredits);
+        
+        alert('¡Compra exitosa! Has adquirido ' + credits + ' créditos por $' + price + '.');
+        
+        updateCreditsDisplay();
+    }
+
+    // Función para actualizar la visualización de los créditos
+    function updateCreditsDisplay() {
+        let currentCredits = parseInt(localStorage.getItem('userCredits')) || 0;
+        document.getElementById('user-credits').innerText = currentCredits + " Créditos";
+    }
+
+    // Actualizar la visualización cuando se cargue la página
+    window.onload = updateCreditsDisplay;
+</script>
+
+</body>
+</html>
